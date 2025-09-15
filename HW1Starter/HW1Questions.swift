@@ -17,7 +17,14 @@ class HW1Questions {
     ///   - count: Target length of file name (excluding the file type)
     /// - Returns: An array of file names whose excluded file type length matches `count`.
     func getFileNames(for filenames: [String], withCount count: Int) -> [String] {
-        return []
+        var returnArr: [String] = []
+        for filename in filenames {
+            let splitFilename = filename.split(separator: ".")
+            if (splitFilename[0].count == count) {
+                returnArr.append(filename)
+            }
+        }
+        return returnArr
     }
     
     
@@ -38,7 +45,35 @@ class HW1Questions {
     ///   - escapeIndex: The ending index
     /// - Returns: A boolean. True if we can escape. False otherwise.
     func canEscape(withDirections directions: [[Direction]], startingIndex: Int, escapeIndex: Int) -> Bool {
-        return false
+        
+        
+        for direction in directions {
+            var copySIndex = startingIndex
+            var invalid = false;
+            for d in direction {
+                if (d == Direction.up || d == Direction.down) {
+                    invalid = true;
+                    break;
+                }
+                else {
+                    if (d == Direction.right) {
+                        copySIndex += 1;
+                    }
+                    else {
+                        copySIndex -= 1;
+                    }
+                }
+            }
+            if (invalid) {
+                copySIndex = startingIndex
+            }
+            
+            if (copySIndex == escapeIndex) {
+                return true;
+            }
+        }
+        
+        return false;
     }
     
 }
